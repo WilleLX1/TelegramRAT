@@ -1,6 +1,6 @@
 # TelegramRAT
- This is a python script that will when executed connect to a telegram Bot and then you can you telegram as a C2
- Almost all credits to Machine1337
+      This is a python script that will when executed connect to a telegram Bot and then you can you telegram as a C2
+      Almost all credits to Machine1337
 
 # Simple Instructions
 
