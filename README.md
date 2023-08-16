@@ -3,7 +3,12 @@
  Almost all credits to Machine1337
 
 # Simple Instructions
-    1. 
+    1. Go to Telegram and search for https://t.me/BotFather
+2. Create Bot and get the API_TOKEN
+3. Now search for https://t.me/chatIDrobot and get the chat_id
+4. Now Go to client.py and go to line 16 and 17 and place API_TOKEN and chat_id there
+5. Now run python client.py For Windows and python3 client.py For Linux
+6. Now Go to the bot which u created and send command in message field
 
 # Features:
      1) CMD Commands (Execute cmd commands directly in bot)
