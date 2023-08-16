@@ -24,7 +24,8 @@
      9) Webcam (Grabs A Picture From Webcam And Sends It)
      10) Startup (Sends A File Containing All Startup Items)
      11) Pwd (Get Current Directory)
-
+     12) Install (Adds presistance to target system)
+     13) Uninstall (Removes presistance from target system)
 
 # Future Updates
 
